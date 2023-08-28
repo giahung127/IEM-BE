@@ -50,7 +50,7 @@ namespace IEM.Application.Models.Extensions
             return str.Substring(str.Length - len, len);
         }
 
-        public static string RemovePostFix(this string str, params string[] postFixes)
+        public static string? RemovePostFix(this string str, params string[] postFixes)
         {
             if (str == null)
             {
@@ -167,7 +167,7 @@ namespace IEM.Application.Models.Extensions
             return combineUrl;
         }
 
-        public static string GetAuthority(this Uri uri)
+        public static string GetAuthority(this Uri? uri)
         {
             if (uri == null)
             {
@@ -176,7 +176,7 @@ namespace IEM.Application.Models.Extensions
             return uri.GetLeftPart(UriPartial.Authority);
         }
 
-        public static bool TryParseUri(this string url, out Uri uri)
+        public static bool TryParseUri(this string url, out Uri? uri)
         {
             uri = null;
             try
