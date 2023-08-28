@@ -1,4 +1,6 @@
+using IEM.Application.Extensions;
 using IEM.Application.Middlewares;
+using IEM.Infrastructure.Extensions;
 using IEM.WebAPI.Extensions;
 using IEM.WebAPI.Middlewares;
 
@@ -10,19 +12,18 @@ var appSettings = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .Build();
 
-
-IEM.Application.Extensions.ServiceExtensions.AddJwtAuthentication(builder.Services, appSettings);
-IEM.Application.Extensions.ServiceExtensions.AddApplicationSevices(builder.Services, appSettings);
-IEM.Infrastructure.Extensions.ServiceExtensions.AddApplicationDbContext(builder.Services, appSettings);
-IEM.Infrastructure.Extensions.ServiceExtensions.AddRepositoryServices(builder.Services);
+builder.Services.AddJwtAuthentication(appSettings);
+builder.Services.AddApplicationSevices(appSettings);
+builder.Services.AddApplicationDbContext(appSettings);
+builder.Services.AddRepositoryServices();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-IEM.Application.Extensions.ServiceExtensions.AddSwagger(builder.Services);
-IEM.Application.Extensions.ServiceExtensions.AddCors(builder.Services, appSettings);
+builder.Services.AddSwagger();
+builder.Services.AddCors(appSettings);
 
 
 builder.Services.AddWebApiService(appSettings);
