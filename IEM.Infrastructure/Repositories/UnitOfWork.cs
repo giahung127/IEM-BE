@@ -34,10 +34,10 @@ namespace IEM.Infrastructure.Repositories
                 action();
                 transaction.Commit();
             }
-            catch (Exception ex)
+            catch
             {
                 transaction.Rollback();
-                throw ex;
+                throw;
             }
         }
 
@@ -49,10 +49,10 @@ namespace IEM.Infrastructure.Repositories
                 action();
                 await transaction.CommitAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 await transaction.RollbackAsync();
-                throw ex;
+                throw;
             }
         }
 
@@ -65,10 +65,10 @@ namespace IEM.Infrastructure.Repositories
                 result = await funcAsync(arg);
                 await transaction.CommitAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 await transaction.RollbackAsync();
-                throw ex;
+                throw;
             }
             return result;
         }
@@ -82,10 +82,10 @@ namespace IEM.Infrastructure.Repositories
                 result = await funcAsync();
                 await transaction.CommitAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 await transaction.RollbackAsync();
-                throw ex;
+                throw;
             }
             return result;
         }

@@ -21,13 +21,13 @@ namespace IEM.Domain.Core.Repositories
 
         T Single(Expression<Func<T, bool>> exp);
 
-        T SingleOrDefault(Expression<Func<T, bool>> exp);
+        T? SingleOrDefault(Expression<Func<T, bool>> exp);
 
-        ValueTask<T> SingleOrDefaultAsync(Expression<Func<T, bool>> exp);
+        ValueTask<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> exp);
 
-        T FirstOrDefault(Expression<Func<T, bool>> exp);
+        T? FirstOrDefault(Expression<Func<T, bool>> exp);
 
-        ValueTask<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
+        ValueTask<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
 
         IQueryable<T> AsTracking();
 

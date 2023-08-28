@@ -53,22 +53,22 @@ namespace IEM.Infrastructure.Repositories
             return this.DbSet.Single(exp);
         }
 
-        public T SingleOrDefault(Expression<Func<T, bool>> exp)
+        public T? SingleOrDefault(Expression<Func<T, bool>> exp)
         {
             return this.DbSet.SingleOrDefault(exp);
         }
 
-        public async ValueTask<T> SingleOrDefaultAsync(Expression<Func<T, bool>> exp)
+        public async ValueTask<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> exp)
         {
             return await this.DbSet.SingleOrDefaultAsync(exp);
         }
 
-        public T FirstOrDefault(Expression<Func<T, bool>> exp)
+        public T? FirstOrDefault(Expression<Func<T, bool>> exp)
         {
             return this.DbSet.FirstOrDefault(exp);
         }
 
-        public async ValueTask<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp)
+        public async ValueTask<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> exp)
         {
             return await this.DbSet.FirstOrDefaultAsync(exp);
         }
@@ -130,7 +130,7 @@ namespace IEM.Infrastructure.Repositories
             return await this.DbSet.Where(exp).AnyAsync();
         }
 
-        private Tuple<string, string> GenerateStoredProcedure(string storedProcName, Dictionary<string, object> parameters)
+        private static Tuple<string, string> GenerateStoredProcedure(string storedProcName, Dictionary<string, object> parameters)
         {
             var sqlParameters = parameters.Select(x => new SqlParameter(x.Key, x.Value ?? DBNull.Value)).ToArray();
             var parameterName = string.Join(",", parameters.Select(x => "@" + x.Key).ToArray());

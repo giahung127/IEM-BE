@@ -1,4 +1,6 @@
-﻿using IEM.Application.Interfaces;
+﻿using AutoMapper;
+using IEM.Application.AutoMapperProfile;
+using IEM.Application.Interfaces;
 using IEM.Application.Models.Constants;
 using IEM.Application.Models.Exceptions;
 using IEM.Application.Models.Extensions;
@@ -168,8 +170,27 @@ namespace IEM.Application.Extensions
 
         public static void AddApplicationSevices(this IServiceCollection services, IConfiguration configuration)
         {
+            #region Core Services
+            services.AddAutoMapper(configuration);
+            #endregion
+
+            #region Bussiness Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            #endregion
         }
+
+        #region private
+        private static void AddAutoMapper(this IServiceCollection services, IConfiguration configuration)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new UserMapperProfile(configuration));
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
+        #endregion
     }
 }
