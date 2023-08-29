@@ -5,7 +5,7 @@ namespace IEM.Infrastructure.Data
 {
     public class ApplicationDatabaseContext : DbContext
     {
-        public ApplicationDatabaseContext(DbContextOptions options) : base(options)
+        public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options) : base(options)
         {
         }
 

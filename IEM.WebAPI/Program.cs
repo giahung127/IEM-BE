@@ -1,4 +1,6 @@
+using HealthChecks.UI.Client;
 using IEM.Application.Extensions;
+using IEM.Application.HealthCheck;
 using IEM.Application.Middlewares;
 using IEM.Infrastructure.Extensions;
 using IEM.WebAPI.Extensions;
@@ -15,6 +17,7 @@ var appSettings = new ConfigurationBuilder()
 builder.Services.AddJwtAuthentication(appSettings);
 builder.Services.AddApplicationSevices(appSettings);
 builder.Services.AddApplicationDbContext(appSettings);
+
 builder.Services.AddRepositoryServices();
 
 // Add services to the container.
@@ -24,7 +27,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 builder.Services.AddCors(appSettings);
-
+builder.Services.AddHealthChecks()
+    .AddCheck<SqlServerHealthCheck>("SqlServer");
+builder.Services.AddHealthChecksUI(options =>
+{
+    options.AddHealthCheckEndpoint("Healthcheck API", "/healthcheck");
+})
+    .AddInMemoryStorage();
 
 builder.Services.AddWebApiService(appSettings);
 
@@ -41,7 +50,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
 
 app.UseCors();
@@ -51,5 +59,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/healthcheck", new()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+})
+    .AllowAnonymous();
+
+app.MapHealthChecksUI(options => options.UIPath = "/dashboard")
+    .AllowAnonymous();
 
 app.Run();
