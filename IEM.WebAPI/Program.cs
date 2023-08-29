@@ -19,7 +19,6 @@ builder.Services.AddApplicationSevices(appSettings);
 builder.Services.AddApplicationDbContext(appSettings);
 
 builder.Services.AddRepositoryServices();
-
 // Add services to the container.
 
 builder.Services.AddControllers();
