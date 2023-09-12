@@ -1,8 +1,10 @@
+using Hangfire;
 using HealthChecks.UI.Client;
 using IEM.Application.Extensions;
 using IEM.Application.HealthCheck;
 using IEM.Application.Middlewares;
 using IEM.Infrastructure.Extensions;
+using IEM.Infrastructure.Hangfire;
 using IEM.WebAPI.Extensions;
 using IEM.WebAPI.Middlewares;
 
@@ -54,19 +56,12 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
+app.UseRouting();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
-app.MapHealthChecks("/healthcheck", new()
-{
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-})
-    .AllowAnonymous();
-
-app.MapHealthChecksUI(options => options.UIPath = "/dashboard")
-    .AllowAnonymous();
+app.UseEndpoints(builder.Configuration);
 
 app.Run();

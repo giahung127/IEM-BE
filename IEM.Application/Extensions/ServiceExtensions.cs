@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Hangfire;
+using Hangfire.SqlServer;
 using IEM.Application.AutoMapperProfile;
 using IEM.Application.Interfaces;
 using IEM.Application.Models.Constants;
 using IEM.Application.Models.Exceptions;
 using IEM.Application.Models.Extensions;
+using IEM.Application.Models.Settings;
 using IEM.Application.Services;
 using IEM.Application.Swaggers;
 using IEM.Application.Utils;
@@ -152,7 +155,7 @@ namespace IEM.Application.Extensions
                             var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthService>();
                             var validationResult = authService.ValidateAccessToken(accessToken);
 
-                            if (validationResult.IsValid)
+                            if (validationResult.IsValid) 
                             {
                                 context.Token = accessToken;
                             }
@@ -172,6 +175,7 @@ namespace IEM.Application.Extensions
         {
             #region Core Services
             services.AddAutoMapper(configuration);
+            services.AddBackgroundServices(configuration, AppSettingConstants.CONNECTION_STRING);
             #endregion
 
             #region Bussiness Services
@@ -190,6 +194,30 @@ namespace IEM.Application.Extensions
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+        }
+
+        private static void AddBackgroundServices(this IServiceCollection services, IConfiguration configuration, string connectionString)
+        {
+
+            var jobConfig = configuration.GetSection(AppSettingConstants.BACKGROUND_JOB);
+            services.AddOptions<BackgroundJobSettingModel>().Bind(jobConfig);
+
+            var jobSetting = jobConfig.Get<BackgroundJobSettingModel>();
+            services.AddHangfire((provide, config) =>
+            {
+                config.UseSimpleAssemblyNameTypeSerializer()
+                .UseSqlServerStorage(configuration.GetConnectionString(connectionString), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(jobSetting?.SlidingInvisibilityTimeoutInMinutes ?? 0),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    PrepareSchemaIfNecessary = true,
+                    DisableGlobalLocks = true
+                });
+
+            });
+            services.AddHangfireServer();
         }
         #endregion
     }

@@ -1,4 +1,6 @@
-﻿namespace IEM.Application.Models.Constants
+﻿using Microsoft.Identity.Client;
+
+namespace IEM.Application.Models.Constants
 {
     public static class AppSettingConstants
     {
@@ -8,5 +10,6 @@
         public const string SECURITY_HEADERS = "SecurityHeaders";
         public const string JWT = "Jwt";
         public const string CORS_ORIGINS = "CorsOrigins";
+        public const string BACKGROUND_JOB = "BackgroundJob";
     }
 }
