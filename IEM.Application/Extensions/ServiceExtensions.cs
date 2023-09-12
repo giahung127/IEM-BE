@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.SqlServer;
 using IEM.Application.AutoMapperProfile;
@@ -10,6 +12,7 @@ using IEM.Application.Models.Settings;
 using IEM.Application.Services;
 using IEM.Application.Swaggers;
 using IEM.Application.Utils;
+using IEM.Application.Validators;
 using IEM.Domain.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -175,6 +178,7 @@ namespace IEM.Application.Extensions
         {
             #region Core Services
             services.AddAutoMapper(configuration);
+            services.AddFluentValidations();
             services.AddBackgroundServices(configuration, AppSettingConstants.CONNECTION_STRING);
             #endregion
 
@@ -185,6 +189,13 @@ namespace IEM.Application.Extensions
         }
 
         #region private
+        private static void AddFluentValidations(this IServiceCollection services)
+        {
+            //services.AddScoped<IValidator<PreloginRequestModel>, PreloginValidator>();
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
+        }
+
         private static void AddAutoMapper(this IServiceCollection services, IConfiguration configuration)
         {
             var mapperConfig = new MapperConfiguration(mc =>
