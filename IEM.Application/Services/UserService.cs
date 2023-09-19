@@ -1,7 +1,11 @@
 ﻿using IEM.Application.Interfaces;
+using IEM.Application.Models.Users;
 using IEM.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Runtime.CompilerServices;
 
+[assembly:InternalsVisibleTo("IEM.UnitTest")]
 namespace IEM.Application.Services
 {
     internal class UserService : BaseService, IUserService
@@ -10,11 +14,11 @@ namespace IEM.Application.Services
             ILogger<UserService> logger) : base(provider, logger)
         {
         }
-        public async ValueTask<IEnumerable<User>> GetAllUsers()
+        public async ValueTask<IEnumerable<UserBaseModel>> GetAllUsers()
         {
-            var users = UnitOfWork.Users.AsQueryable();
+            var users = await UnitOfWork.Users.AsQueryable().ToListAsync();
 
-            return users;
+            return Mapper.Map<IEnumerable<UserBaseModel>>(users);
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using IEM.Domain.Entities;
+﻿using IEM.Application.Models.Users;
+using IEM.Domain.Entities;
 
 namespace IEM.Application.Interfaces
 {
     public interface IUserService
     {
-        public ValueTask<IEnumerable<User>> GetAllUsers();
+        public ValueTask<IEnumerable<UserBaseModel>> GetAllUsers();
     }
 }
