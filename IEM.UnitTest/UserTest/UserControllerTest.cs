@@ -3,10 +3,13 @@ using Castle.Core.Logging;
 using IEM.Application.Interfaces;
 using IEM.Application.Models.Commons;
 using IEM.Application.Models.Users;
+using IEM.Application.Services;
 using IEM.Domain.Core.Repositories;
 using IEM.Domain.Entities;
 using IEM.WebAPI.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 
@@ -31,9 +34,9 @@ namespace IEM.UnitTest.UserTest
             //Arrange
             var users = GetUsersData();
             _userService.Setup(x => x.GetAllUsers())
-                .ReturnsAsync(users);
+                .ReturnsAsync(_mapper.Map<IEnumerable<UserBaseModel>>(users));
 
-            var userController = new UsersController(_userService.Object, _mapper);
+            var userController = new UsersController(_userService.Object);
 
             //Act
             var usersResult = await userController.GetAllUsers();
@@ -42,6 +45,34 @@ namespace IEM.UnitTest.UserTest
             Assert.Equal(200 ,usersResult.StatusCode);
             Assert.IsType<ApiResponseModel<IEnumerable<UserBaseModel>>>(usersResult);
             Assert.Equal(users.Count(), ((IApiResponseModel<IEnumerable<UserBaseModel>>)usersResult).Data.Count());
+        }
+
+        [Fact]
+        public async void ShouldGetAllUsers()
+        {
+            //Arrange
+            var users = GetUsersData();
+            var serviceCollection = new ServiceCollection();
+            var unitOfWork = new Mock<IUnitOfWork>();
+            var repository = new Mock<IUserRepository>();
+            var loggerFac = new LoggerFactory();
+
+            repository.Setup(x => x.ToListAsync())
+                .ReturnsAsync(users);
+            unitOfWork.Setup(x => x.Users)
+                .Returns(repository.Object);
+
+            var logger = new Mock<Logger<UserService>>();
+            serviceCollection.AddScoped<IUnitOfWork>(provider => unitOfWork.Object);
+            serviceCollection.AddScoped<IMapper>(provider => _mapper);
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var userService = new UserService(serviceProvider, loggerFac.CreateLogger<UserService>());
+
+            // Act
+            var result = await userService.GetAllUsers();
+
+            //
+            Assert.Equal(users.Count(), result.Count());
         }
 
         private List<User> GetUsersData()

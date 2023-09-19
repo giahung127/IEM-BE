@@ -16,7 +16,7 @@ namespace IEM.Application.Services
         }
         public async ValueTask<IEnumerable<UserBaseModel>> GetAllUsers()
         {
-            var users = await UnitOfWork.Users.AsQueryable().ToListAsync();
+            var users = await UnitOfWork.Users.ToListAsync();
 
             return Mapper.Map<IEnumerable<UserBaseModel>>(users);
         }

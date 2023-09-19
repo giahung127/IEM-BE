@@ -7,6 +7,8 @@ namespace IEM.Domain.Core.Repositories
     {
         IQueryable<T> AsQueryable();
 
+        Task<IEnumerable<T>> ToListAsync();
+
         public IIncludableQueryable<T, K> Include<K>(Expression<Func<T, K>> exp);
 
         bool Any(Expression<Func<T, bool>> exp);

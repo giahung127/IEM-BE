@@ -4,6 +4,7 @@ using IEM.Infrastructure.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Collections;
 using System.Linq.Expressions;
 
 namespace IEM.Infrastructure.Repositories
@@ -21,6 +22,11 @@ namespace IEM.Infrastructure.Repositories
         public IQueryable<T> AsQueryable()
         {
             return this.DbSet;
+        }
+
+        public async Task<IEnumerable<T>> ToListAsync()
+        {
+            return await this.DbSet.ToListAsync();
         }
 
         public IIncludableQueryable<T, K> Include<K>(Expression<Func<T, K>> exp)
