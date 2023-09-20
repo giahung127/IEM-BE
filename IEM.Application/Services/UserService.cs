@@ -20,5 +20,49 @@ namespace IEM.Application.Services
 
             return Mapper.Map<IEnumerable<UserBaseModel>>(users);
         }
+
+        public async ValueTask<User> CreateUserAsync(UserCreateModel model)
+        {
+            var user = Mapper.Map<User>(model);
+
+            await UnitOfWork.Users.CreateAsync(user);
+            await UnitOfWork.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async ValueTask<UserSingleModel> GetSingleUserAysnc(int id)
+        {
+            var user = await this.UnitOfWork.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                throw new ApplicationException("User not found");
+            }
+
+            return Mapper.Map<UserSingleModel>(user);
+        }
+
+        public async ValueTask<UserSingleModel> GetSingleUserAysnc(string mail)
+        {
+            var user = await this.UnitOfWork.Users.FirstOrDefaultAsync(x => x.Email == mail);
+
+            if (user == null)
+            {
+                throw new ApplicationException("User not found");
+            }
+
+            return Mapper.Map<UserSingleModel>(user);
+        }
+
+        public async ValueTask<bool> CheckUserExistsAsync(string Email)
+        {
+            if (await UnitOfWork.Users.AnyAsync(x => x.Email == Email))
+            {
+                return true;
+            }
+
+            return false;    
+        }
     }
 }

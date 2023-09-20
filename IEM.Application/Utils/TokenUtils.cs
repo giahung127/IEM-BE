@@ -58,9 +58,9 @@ namespace IEM.Application.Utils
             return CreateJwtToken(TokenTypes.AccessToken, jwtSettings, user);
         }
 
-        public static JwtSecurityToken ParseJwtSecurityToken(TokenTypes type, JwtSettingModel jwtSettings, string token, ILogger logger)
+        public static JwtSecurityToken? ParseJwtSecurityToken(TokenTypes type, JwtSettingModel jwtSettings, string token, ILogger logger)
         {
-            SecurityToken validatedToken = null;
+            SecurityToken? validatedToken = null;
             var tokenHandler = new JwtSecurityTokenHandler();
             try
             {

@@ -10,6 +10,7 @@ namespace IEM.Domain.Entities
         public required string Mobile { get; set; }
         public required string Name { get; set; }
         public required string Email { get; set; }
+        public required string Password { get; set; }
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }

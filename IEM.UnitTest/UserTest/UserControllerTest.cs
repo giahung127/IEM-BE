@@ -84,14 +84,16 @@ namespace IEM.UnitTest.UserTest
                     Id = 1,
                     Name = "Test1",
                     Mobile = "123456789",
-                    Email = "test1@iem.com"
+                    Email = "test1@iem.com",
+                    Password = string.Empty,
                 },
                 new User
                 {
                     Id = 2,
                     Name = "Test2",
                     Mobile = "123456789",
-                    Email = "test2@iem.com"
+                    Email = "test2@iem.com",
+                    Password = string.Empty,
                 }
             };
 

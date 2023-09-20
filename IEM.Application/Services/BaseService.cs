@@ -25,20 +25,20 @@ namespace IEM.Application.Services
         {
             get
             {
-                return Configuration.GetSection(AppSettingConstants.JWT).Get<JwtSettingModel>();
+                return Configuration.GetSection(AppSettingConstants.JWT).Get<JwtSettingModel>()!;
             }
         }
 
         public BaseService(IServiceProvider provider, ILogger logger)
         {
-            UnitOfWork = provider.GetService<IUnitOfWork>();
-            Mapper = provider.GetService<IMapper>();
-            Configuration = provider.GetService<IConfiguration>();
-            HttpContextAccessor = provider.GetService<IHttpContextAccessor>();
+            UnitOfWork = provider.GetService<IUnitOfWork>()!;
+            Mapper = provider.GetService<IMapper>()!;
+            Configuration = provider.GetService<IConfiguration>()!;
+            HttpContextAccessor = provider.GetService<IHttpContextAccessor>()!;
             Logger = logger;
         }
 
-        protected JwtSecurityToken ParseJwtSecurityToken(TokenTypes type, JwtSettingModel jwtSettings, string token)
+        protected JwtSecurityToken? ParseJwtSecurityToken(TokenTypes type, JwtSettingModel jwtSettings, string token)
         {
             return TokenUtils.ParseJwtSecurityToken(type, jwtSettings, token, Logger);
         }
