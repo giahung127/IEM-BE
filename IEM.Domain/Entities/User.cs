@@ -15,5 +15,7 @@ namespace IEM.Domain.Entities
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public Role Role { get; set; } = null!;
+
+        public ICollection<UserConnection> UserConnections { get; set; } = new List<UserConnection>();
     }
 }
