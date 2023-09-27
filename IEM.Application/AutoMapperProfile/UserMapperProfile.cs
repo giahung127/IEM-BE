@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IEM.Application.Models.Auth;
 using IEM.Application.Models.Users;
 using IEM.Domain.Entities;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,8 @@ namespace IEM.Application.AutoMapperProfile
         public UserMapperProfile(IConfiguration configuration) 
         {
             CreateMap<User, UserBaseModel>();
+            CreateMap<UserRegistrationModel, UserCreateModel>();
+            CreateMap<UserCreateModel, User>();
         }
     }
 }

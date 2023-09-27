@@ -101,5 +101,6 @@ namespace IEM.Infrastructure.Repositories
         }
 
         public IUserRepository Users => ServiceProvider.GetRequiredService<IUserRepository>();
+        public IRoleRepository Roles => ServiceProvider.GetRequiredService<IRoleRepository>();
     }
 }

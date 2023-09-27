@@ -14,6 +14,7 @@ namespace IEM.Infrastructure.Extensions
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
         }
 
         public static void AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration)

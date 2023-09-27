@@ -25,6 +25,8 @@ namespace IEM.Application.Services
         {
             var user = Mapper.Map<User>(model);
 
+            user.RoleId = (await UnitOfWork.Roles.FirstOrDefaultAsync(x => x.RoleCode == 1))!.Id;
+
             await UnitOfWork.Users.CreateAsync(user);
             await UnitOfWork.SaveChangesAsync();
 

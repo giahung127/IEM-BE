@@ -28,11 +28,18 @@ namespace IEM.WebAPI.Controllers
             return await ResponseUtils.OkResultAsync(_userService.GetAllUsers());
         }
 
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async ValueTask<IApiResponseModel> Register(UserRegistrationModel model)
+        {
+            return await ResponseUtils.OkResultAsync(_authService.RegisterUserAsync(model));
+        }
+
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async ValueTask<IApiResponseModel> LoginAsync(LoginRequestModel request)
+        public async ValueTask<IApiResponseModel> Login(LoginRequestModel model)
         {
-            return await ResponseUtils.OkResultAsync(_userService.GetAllUsers());
+            return await ResponseUtils.OkResultAsync(_authService.LoginAsync(model));
         }
 
     }

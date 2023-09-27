@@ -103,10 +103,7 @@ namespace IEM.Application.Utils
                 new Claim(ClaimTypeConstants.ADMIN_ACCESS, $"{user.AdminAccess}")
             };
 
-            if (user.UserId != null && user.UserId != Guid.Empty)
-            {
-                claims.Add(new Claim(ClaimTypeConstants.USER_ID, user.UserId.ToString()));
-            }
+            claims.Add(new Claim(ClaimTypeConstants.USER_ID, user.UserId.ToString()));
 
             if (!string.IsNullOrEmpty(user.Email))
             {
@@ -122,10 +119,11 @@ namespace IEM.Application.Utils
                 Expires = expiredDate.DateTime,
                 SigningCredentials = signingCredentials,
             };
-            if (!string.IsNullOrEmpty(user.Audience))
-            {
-                tokenDescriptor.Audience = user.Audience;
-            }
+
+            //if (!string.IsNullOrEmpty(user.Audience))
+            //{
+            //    tokenDescriptor.Audience = user.Audience;
+            //}
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return Tuple.Create(tokenHandler.WriteToken(token), expiredDate);

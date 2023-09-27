@@ -21,5 +21,6 @@ namespace IEM.Domain.Core.Repositories
         ValueTask<int> SaveChangesAsync();
 
         IUserRepository Users { get; }
+        IRoleRepository Roles { get; }
     }
 }
