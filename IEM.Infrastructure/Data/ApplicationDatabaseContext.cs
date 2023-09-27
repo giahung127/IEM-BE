@@ -17,6 +17,7 @@ namespace IEM.Infrastructure.Data
         {
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasKey(x => x.Id);
                 entity.HasOne(e => e.Role)
                 .WithMany(e => e.Users)
                 .HasForeignKey(e => e.RoleId)
@@ -27,6 +28,7 @@ namespace IEM.Infrastructure.Data
 
             modelBuilder.Entity<UserConnection>(entity =>
             {
+                entity.HasKey(x => x.Id);
                 entity.HasOne(e => e.User)
                 .WithMany(e => e.UserConnections)
                 .HasForeignKey(e => e.UserId)
@@ -34,6 +36,12 @@ namespace IEM.Infrastructure.Data
                 .HasConstraintName("FK_UserConnections_User")
                 .HasPrincipalKey(e => e.Id);
             });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+            });
+
         }
     }
 }

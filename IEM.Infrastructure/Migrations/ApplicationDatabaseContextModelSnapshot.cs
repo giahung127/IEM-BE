@@ -100,10 +100,9 @@ namespace IEM.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("RefreshToken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("RefreshTokenExpirationDate")
+                    b.Property<DateTimeOffset?>("RefreshTokenExpirationDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<long>("UserId")

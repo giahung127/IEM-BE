@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IEM.Domain.Entities
 {
     public class UserConnection
     {
-        public required long Id { get; set; }
+        public long Id { get; set; }
         public required string AccessToken { get; set; }
-        public required string RefreshToken { get; set; }
+        public string? RefreshToken { get; set; }
         public DateTimeOffset AccessTokenExpiredDate { get; set; }
-        public DateTimeOffset RefreshTokenExpirationDate { get;set; }
+        public DateTimeOffset? RefreshTokenExpirationDate { get; set; }
         //public string DeviceKey { get; set; }
         public bool IsDeleted { get; set; }
         public DateTimeOffset CreatedOn { get; set; }

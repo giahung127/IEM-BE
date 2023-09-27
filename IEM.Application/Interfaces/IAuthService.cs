@@ -6,6 +6,6 @@ namespace IEM.Application.Interfaces
     {
         TokenValidationModel ValidateAccessToken(string accessToken);
         ValueTask<bool> RegisterUserAsync(UserRegistrationModel model);
-        ValueTask<bool> LoginAsync(LoginRequestModel model);
+        ValueTask<LoginResponseModel> LoginAsync(LoginRequestModel model);
     }
 }

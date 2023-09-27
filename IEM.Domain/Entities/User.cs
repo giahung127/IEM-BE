@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IEM.Domain.Entities
 {
     public class User
     {
-        [Key]
         public long Id { get; set; }
         public required string Mobile { get; set; }
         public required string Name { get; set; }

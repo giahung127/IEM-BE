@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Hangfire;
+﻿using Hangfire;
 using IEM.Application.Interfaces;
 using IEM.Application.Models.Commons;
-using IEM.Application.Models.Users;
 using IEM.Application.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +21,6 @@ namespace IEM.WebAPI.Controllers
         }
 
         [HttpGet("")]
-        [AllowAnonymous]
         public async ValueTask<IApiResponseModel> GetAllUsers()
         {
             var result = await _userService.GetAllUsers();
@@ -31,7 +28,6 @@ namespace IEM.WebAPI.Controllers
         }
 
         [HttpGet("JobTest")]
-        [AllowAnonymous]
         public async ValueTask<IApiResponseModel> TestJob()
         {
             var jobId = BackgroundJob.Enqueue(() => Debug.WriteLine("FromJob: Welcome"));

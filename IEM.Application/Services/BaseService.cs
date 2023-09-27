@@ -47,19 +47,15 @@ namespace IEM.Application.Services
         {
             var result = new TokenValidationModel();
             var jwtSecurityToken = ParseJwtSecurityToken(TokenTypes.AccessToken, JwtSettings, accessToken);
-            //if (jwtSecurityToken != null)
-            //{
-            //    var userId = jwtSecurityToken.GetUserId();
-            //    var domain = await this.UnitOfWork.UserConnections
-            //                .FirstOrDefaultAsync(i => i.AccessToken == accessToken && i.UserId == userId
-            //                                       && i.AccessTokenExpiredDate >= DateTimeOffset.UtcNow);
-            //    result.IsValid = domain != null;
-            //    result.UserId = userId;
-            //    if (result.IsValid)
-            //    {
-            //        result.EntityId = jwtSecurityToken.GetEntityId();
-            //    }
-            //}
+            if (jwtSecurityToken != null)
+            {
+                var userId = int.Parse(jwtSecurityToken.Claims.First(x => x.Type == ClaimTypeConstants.USER_ID).Value);
+                var domain = await this.UnitOfWork.UserConnections
+                            .FirstOrDefaultAsync(i => i.AccessToken == accessToken && i.UserId == userId
+                                                   && i.AccessTokenExpiredDate >= DateTimeOffset.UtcNow);
+                result.IsValid = domain != null;
+                result.UserId = userId;
+            }
             return result;
         }
 

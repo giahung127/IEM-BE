@@ -22,5 +22,6 @@ namespace IEM.Domain.Core.Repositories
 
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
+        IUserConnectionRepository UserConnections { get; }
     }
 }
