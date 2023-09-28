@@ -21,6 +21,7 @@ namespace IEM.WebAPI.Controllers
         }
 
         [HttpGet("")]
+        [Authorize(Policy = "Admin")]
         public async ValueTask<IApiResponseModel> GetAllUsers()
         {
             var result = await _userService.GetAllUsers();

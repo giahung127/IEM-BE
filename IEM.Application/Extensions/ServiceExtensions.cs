@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.SqlServer;
+using IEM.Application.Authorizations;
 using IEM.Application.AutoMapperProfile;
 using IEM.Application.Interfaces;
 using IEM.Application.Models.Constants;
@@ -158,7 +159,7 @@ namespace IEM.Application.Extensions
                             var authService = context.HttpContext.RequestServices.GetRequiredService<IAuthService>();
                             var validationResult = authService.ValidateAccessToken(accessToken);
 
-                            if (validationResult.IsValid) 
+                            if (validationResult.IsValid)
                             {
                                 context.Token = accessToken;
                             }
@@ -186,6 +187,17 @@ namespace IEM.Application.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             #endregion
+        }
+
+        public static void AddPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("Admin",
+                    policy => policy.AddRequirements(new AdminAccessRequirement(1))
+                );
+            });
+            services.AddScoped<IAuthorizationHandler, AdminAccessHandler>();
         }
 
         #region private

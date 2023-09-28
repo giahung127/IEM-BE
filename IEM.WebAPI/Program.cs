@@ -1,10 +1,7 @@
-using Hangfire;
-using HealthChecks.UI.Client;
 using IEM.Application.Extensions;
 using IEM.Application.HealthCheck;
 using IEM.Application.Middlewares;
 using IEM.Infrastructure.Extensions;
-using IEM.Infrastructure.Hangfire;
 using IEM.WebAPI.Extensions;
 using IEM.WebAPI.Middlewares;
 
@@ -17,6 +14,7 @@ var appSettings = new ConfigurationBuilder()
     .Build();
 
 builder.Services.AddJwtAuthentication(appSettings);
+builder.Services.AddPolicies();
 builder.Services.AddApplicationSevices(appSettings);
 builder.Services.AddApplicationDbContext(appSettings);
 
