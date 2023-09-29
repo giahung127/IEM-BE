@@ -7,21 +7,21 @@ namespace IEM.Application.Models.Commons
     {
         int ErrorCode { get; set; }
         string ErrorMessage { get; set; }
-        string ErrorDetail { get; set; }
-        string ErrorUrl { get; set; }
+        string? ErrorDetail { get; set; }
+        string? ErrorUrl { get; set; }
 
         string ToString();
 
-        ModelStateDictionary ModelError { get; set; }
+        ModelStateDictionary? ModelError { get; set; }
     }
 
     public class ApiErrorResponseModel : IApiErrorResponseModel
     {
-        public ApiErrorResponseModel(int errorCode, string errorMessage, string errorDetail = null)
+        public ApiErrorResponseModel(int errorCode, string errorMessage, string? errorDetail = null)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
-            ErrorDetail = errorDetail;
+            ErrorDetail = errorDetail!;
         }
 
         public ApiErrorResponseModel(int errorCode, string errorMessage, ModelStateDictionary modelError)
@@ -35,14 +35,14 @@ namespace IEM.Application.Models.Commons
 
         public string ErrorMessage { get; set; }
 
-        public string ErrorDetail { get; set; }
+        public string? ErrorDetail { get; set; }
 
-        public string ErrorUrl { get; set; }
+        public string? ErrorUrl { get; set; }
 
         public DateTimeOffset Timestamp
         { get { return DateTimeOffset.UtcNow; } }
 
-        public ModelStateDictionary ModelError { get; set; }
+        public ModelStateDictionary? ModelError { get; set; }
 
         public override string ToString()
         {

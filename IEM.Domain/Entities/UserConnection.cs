@@ -4,7 +4,7 @@ namespace IEM.Domain.Entities
 {
     public class UserConnection
     {
-        public long Id { get; set; }
+        public Guid UserConnectionId { get; set; }
         public required string AccessToken { get; set; }
         public string? RefreshToken { get; set; }
         public DateTimeOffset AccessTokenExpiredDate { get; set; }
@@ -17,7 +17,7 @@ namespace IEM.Domain.Entities
 
         // User foreginer key
         [ForeignKey("User")]
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; } = null!;
     }
 }

@@ -50,7 +50,7 @@ namespace IEM.Application.Extensions
                     // CorsOrigins in appsettings.json can contain more than one address separated by semicolon.
                     var origins = originConfig.Split(";", StringSplitOptions.RemoveEmptyEntries)
                           .Select(o => o.RemovePostFix("/")).ToArray();
-                    builder.WithOrigins(origins)
+                    builder.WithOrigins(origins!)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()

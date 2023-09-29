@@ -72,7 +72,7 @@ namespace IEM.Application.Utils
             return new ApiResponseModel<T>(data, statusCode);
         }
 
-        public static IApiErrorResponseModel CreateErrorResult(int errorCode, string errorMessage, string errorDetail = null)
+        public static IApiErrorResponseModel CreateErrorResult(int errorCode, string errorMessage, string? errorDetail = null)
         {
             return new ApiErrorResponseModel(errorCode, errorMessage, errorDetail);
         }
@@ -83,7 +83,7 @@ namespace IEM.Application.Utils
         }
 
         public static async Task CreateJsonResponseAsync(this JwtBearerChallengeContext context, int statusCode, int errorCode,
-            string errorMessage, string errorDetail = null)
+            string errorMessage, string? errorDetail = null)
         {
             var boby = CreateErrorResult(errorCode, errorMessage, errorDetail);
             context.Response.StatusCode = statusCode;
@@ -93,7 +93,7 @@ namespace IEM.Application.Utils
         }
 
         public static async Task CreateJsonResponseAsync(this HttpContext context, int statusCode, int errorCode,
-            string errorMessage, string errorDetail = null)
+            string errorMessage, string? errorDetail = null)
         {
             var boby = CreateErrorResult(errorCode, errorMessage, errorDetail);
             context.Response.StatusCode = statusCode;

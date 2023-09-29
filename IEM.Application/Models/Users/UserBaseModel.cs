@@ -8,7 +8,7 @@ namespace IEM.Application.Models.Users
 {
     public class UserBaseModel
     {
-        public int Id { get; set; }
+        public Guid UserId { get; set; }
         public string? Email { get; set; }
     }
 }

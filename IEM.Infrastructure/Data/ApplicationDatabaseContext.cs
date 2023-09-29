@@ -17,29 +17,27 @@ namespace IEM.Infrastructure.Data
         {
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(x => x.Id);
+                entity.HasKey(x => x.UserId);
                 entity.HasOne(e => e.Role)
                 .WithMany(e => e.Users)
                 .HasForeignKey(e => e.RoleId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Users_Role")
-                .HasPrincipalKey(e => e.Id);
+                .HasConstraintName("FK_Users_Role");
             });
 
             modelBuilder.Entity<UserConnection>(entity =>
             {
-                entity.HasKey(x => x.Id);
+                entity.HasKey(x => x.UserId);
                 entity.HasOne(e => e.User)
                 .WithMany(e => e.UserConnections)
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_UserConnections_User")
-                .HasPrincipalKey(e => e.Id);
+                .HasConstraintName("FK_UserConnections_User");
             });
 
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.RoleId);
             });
 
         }

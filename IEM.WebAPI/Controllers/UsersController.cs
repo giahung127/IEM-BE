@@ -29,7 +29,7 @@ namespace IEM.WebAPI.Controllers
         }
 
         [HttpGet("JobTest")]
-        public async ValueTask<IApiResponseModel> TestJob()
+        public IApiResponseModel TestJob()
         {
             var jobId = BackgroundJob.Enqueue(() => Debug.WriteLine("FromJob: Welcome"));
             return ResponseUtils.OkResult(jobId);

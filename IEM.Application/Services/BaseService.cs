@@ -49,7 +49,7 @@ namespace IEM.Application.Services
             var jwtSecurityToken = ParseJwtSecurityToken(TokenTypes.AccessToken, JwtSettings, accessToken);
             if (jwtSecurityToken != null)
             {
-                var userId = int.Parse(jwtSecurityToken.Claims.First(x => x.Type == ClaimTypeConstants.USER_ID).Value);
+                var userId = Guid.Parse(jwtSecurityToken.Claims.First(x => x.Type == ClaimTypeConstants.USER_ID).Value);
                 var domain = await this.UnitOfWork.UserConnections
                             .FirstOrDefaultAsync(i => i.AccessToken == accessToken && i.UserId == userId
                                                    && i.AccessTokenExpiredDate >= DateTimeOffset.UtcNow);

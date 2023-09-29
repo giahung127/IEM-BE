@@ -25,7 +25,7 @@ namespace IEM.Application.Services
         {
             var user = Mapper.Map<User>(model);
 
-            user.RoleId = (await UnitOfWork.Roles.FirstOrDefaultAsync(x => x.RoleCode == 1))!.Id;
+            user.RoleId = (await UnitOfWork.Roles.FirstOrDefaultAsync(x => x.RoleCode == 1))!.RoleId;
 
             await UnitOfWork.Users.CreateAsync(user);
             await UnitOfWork.SaveChangesAsync();
@@ -33,9 +33,9 @@ namespace IEM.Application.Services
             return user;
         }
 
-        public async ValueTask<UserSingleModel> GetSingleUserAysnc(int id)
+        public async ValueTask<UserSingleModel> GetSingleUserAysnc(Guid userId)
         {
-            var user = await this.UnitOfWork.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await this.UnitOfWork.Users.FirstOrDefaultAsync(x => x.UserId == userId);
 
             if (user == null)
             {

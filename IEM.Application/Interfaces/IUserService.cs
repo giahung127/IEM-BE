@@ -7,7 +7,7 @@ namespace IEM.Application.Interfaces
     {
         public ValueTask<IEnumerable<UserBaseModel>> GetAllUsers();
         ValueTask<User> CreateUserAsync(UserCreateModel model);
-        ValueTask<UserSingleModel> GetSingleUserAysnc(int id);
+        ValueTask<UserSingleModel> GetSingleUserAysnc(Guid userId);
         ValueTask<bool> CheckUserExistsAsync(string Email);
     }
 }

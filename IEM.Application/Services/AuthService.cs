@@ -57,7 +57,7 @@ namespace IEM.Application.Services
                 var tokenModel = new UserTokenModel
                 {
                     Email = user.Email,
-                    UserId = user.Id,
+                    UserId = user.UserId,
                     AdminAccess = user.Role.RoleCode
                 };
 

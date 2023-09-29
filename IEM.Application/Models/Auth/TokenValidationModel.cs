@@ -2,7 +2,7 @@
 {
     public class TokenValidationModel
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public bool IsValid { get; set; }
     }
 }

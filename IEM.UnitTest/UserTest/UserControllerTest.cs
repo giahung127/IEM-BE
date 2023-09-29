@@ -81,7 +81,7 @@ namespace IEM.UnitTest.UserTest
             {
                 new User
                 {
-                    Id = 1,
+                    UserId = new Guid(),
                     Name = "Test1",
                     Mobile = "123456789",
                     Email = "test1@iem.com",
@@ -89,7 +89,7 @@ namespace IEM.UnitTest.UserTest
                 },
                 new User
                 {
-                    Id = 2,
+                    UserId = new Guid(),
                     Name = "Test2",
                     Mobile = "123456789",
                     Email = "test2@iem.com",

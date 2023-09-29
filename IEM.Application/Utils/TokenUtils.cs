@@ -20,7 +20,7 @@ namespace IEM.Application.Utils
 
         public static JwtSettingModel GetJwtSettings(IConfiguration configuration)
         {
-            return GetJwtSettingsConfiguration(configuration).Get<JwtSettingModel>();
+            return GetJwtSettingsConfiguration(configuration).Get<JwtSettingModel>()!;
         }
 
         public static TokenValidationParameters CreateJwtTokenParameters(TokenTypes type, JwtSettingModel jwtSettings)
